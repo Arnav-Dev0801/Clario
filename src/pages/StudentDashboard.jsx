@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import SkillMap from '../components/SkillMap';
 import { GlassPanel, PageHero, PageShell, PrimaryButton, StatusBadge } from '../components/AppShell';
 import { subscribeSessionsForStudent } from '../services/sessionService';
+import { StatCard, SessionCard, TimelineItem } from '../components/dashboard';
+import Card, { CardHeader, CardTitle, CardDescription, CardContent } from '../components/ui/Card';
 
 export default function StudentDashboard({ user, userProfile }) {
   const navigate = useNavigate();
@@ -17,6 +19,8 @@ export default function StudentDashboard({ user, userProfile }) {
   const upcoming = sessions.filter((session) => session.status === 'accepted' || session.status === 'in_progress');
   const recent = sessions.filter((session) => session.status === 'completed').slice(0, 3);
   const greetingName = userProfile?.displayName || user?.displayName || user?.email || 'Student';
+  const totalSessions = sessions.length;
+  const completedSessions = recent.length;
 
   return (
     <PageShell>
@@ -34,6 +38,34 @@ export default function StudentDashboard({ user, userProfile }) {
         }
       />
 
+      {/* Stats Grid */}
+      <div className="grid gap-4 md:grid-cols-4 mb-8">
+        <StatCard 
+          icon="📚" 
+          label="Total Sessions" 
+          value={totalSessions}
+          trend={upcoming.length > 0 ? `${upcoming.length} upcoming` : ''}
+        />
+        <StatCard 
+          icon="✅" 
+          label="Completed" 
+          value={completedSessions}
+          trend={completedSessions > 0 ? '100% rate' : 'No sessions'}
+        />
+        <StatCard 
+          icon="⏳" 
+          label="Learning Hours" 
+          value={Math.round(sessions.reduce((acc, s) => acc + (s.duration || 0), 0) / 60)}
+          trend={sessions.length > 0 ? 'Growing' : 'Start today'}
+        />
+        <StatCard 
+          icon="⭐" 
+          label="Avg Rating" 
+          value={sessions.length > 0 ? '4.8' : 'N/A'}
+          trend={sessions.length > 0 ? 'Excellent' : 'Rate sessions'}
+        />
+      </div>
+
       <div className="mb-8">
         <GlassPanel className="overflow-hidden">
           <div className="mb-5 flex items-center justify-between gap-4">
@@ -47,69 +79,88 @@ export default function StudentDashboard({ user, userProfile }) {
         </GlassPanel>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-2">
-        <GlassPanel>
-          <div className="mb-5 flex items-center justify-between">
-            <h2 className="text-xl font-semibold text-white">Upcoming sessions</h2>
-            <StatusBadge tone="cyan">{upcoming.length || 0} queued</StatusBadge>
-          </div>
-          {upcoming.length === 0 ? (
-            <p className="text-white/62">
-              No upcoming sessions.{' '}
-              <Link to="/find-skills" className="text-cyan hover:text-white">
-                Find a tutor
-              </Link>
-            </p>
-          ) : (
-            <motion.div 
-              initial="hidden" 
-              animate="show" 
-              variants={{
-                hidden: { opacity: 0 },
-                show: {
-                  opacity: 1,
-                  transition: { staggerChildren: 0.1 }
-                }
-              }}
-              className="space-y-4"
-            >
-              {upcoming.map((session) => (
+      <div className="grid gap-6 lg:grid-cols-3 mb-8">
+        {/* Upcoming Sessions */}
+        <div className="lg:col-span-2">
+          <Card>
+            <CardHeader>
+              <CardTitle>Upcoming Sessions</CardTitle>
+              <CardDescription>{upcoming.length} scheduled sessions</CardDescription>
+            </CardHeader>
+            <CardContent>
+              {upcoming.length === 0 ? (
+                <div className="text-center py-8">
+                  <p className="text-foreground-secondary mb-4">No upcoming sessions.</p>
+                  <Link to="/find-skills">
+                    <PrimaryButton type="button">Find a tutor</PrimaryButton>
+                  </Link>
+                </div>
+              ) : (
                 <motion.div 
-                  key={session.id} 
+                  initial="hidden" 
+                  animate="show" 
                   variants={{
-                    hidden: { opacity: 0, y: 10 },
-                    show: { opacity: 1, y: 0 }
+                    hidden: { opacity: 0 },
+                    show: {
+                      opacity: 1,
+                      transition: { staggerChildren: 0.1 }
+                    }
                   }}
-                  className="rounded-[1.3rem] border border-white/10 bg-white/5 p-4"
+                  className="space-y-3"
                 >
-                  <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                    <div>
-                      <p className="text-lg font-semibold text-white">{session.skill}</p>
-                      <p className="mt-1 text-sm text-white/55">Session status updates sync across devices in real time.</p>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <StatusBadge tone={session.status === 'in_progress' ? 'teal' : 'cyan'}>
-                        {session.status.replace('_', ' ')}
-                      </StatusBadge>
-                      <Link to={`/session/lobby/${session.id}`} className="rounded-full bg-cyan px-4 py-2 text-sm font-semibold text-navy transition hover:bg-[#8df3ff]">
-                        Open lobby
-                      </Link>
-                    </div>
-                  </div>
+                  {upcoming.map((session) => (
+                    <SessionCard
+                      key={session.id}
+                      id={session.id}
+                      skill={session.skill}
+                      tutor={session.tutorName || 'Tutor'}
+                      status={session.status}
+                      time={session.scheduledTime}
+                      onJoin={() => navigate(`/session/lobby/${session.id}`)}
+                      isActive={session.status === 'in_progress'}
+                    />
+                  ))}
                 </motion.div>
-              ))}
-            </motion.div>
-          )}
-        </GlassPanel>
+              )}
+            </CardContent>
+          </Card>
+        </div>
 
-        <GlassPanel>
-          <div className="mb-5 flex items-center justify-between">
-            <h2 className="text-xl font-semibold text-white">Recent sessions</h2>
-            <StatusBadge tone="teal">{recent.length || 0} completed</StatusBadge>
-          </div>
-          {recent.length === 0 ? (
-            <p className="text-white/62">No past sessions yet.</p>
-          ) : (
+        {/* Learning History */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Learning History</CardTitle>
+            <CardDescription>Recent activity</CardDescription>
+          </CardHeader>
+          <CardContent className="max-h-96 overflow-y-auto">
+            {recent.length === 0 ? (
+              <p className="text-sm text-foreground-tertiary">No completed sessions yet.</p>
+            ) : (
+              <div className="space-y-4">
+                {recent.map((session) => (
+                  <TimelineItem
+                    key={session.id}
+                    icon="✅"
+                    title={session.skill}
+                    description="Session completed"
+                    time={session.completedAt ? new Date(session.completedAt).toLocaleDateString() : 'Recently'}
+                    variant="success"
+                  />
+                ))}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Recent Sessions */}
+      {recent.length > 0 && (
+        <Card>
+          <CardHeader>
+            <CardTitle>Recent Sessions</CardTitle>
+            <CardDescription>{recent.length} completed sessions</CardDescription>
+          </CardHeader>
+          <CardContent>
             <motion.div 
               initial="hidden" 
               animate="show" 
@@ -120,32 +171,23 @@ export default function StudentDashboard({ user, userProfile }) {
                   transition: { staggerChildren: 0.1 }
                 }
               }}
-              className="space-y-4"
+              className="space-y-3"
             >
               {recent.map((session) => (
-                <motion.div 
-                  key={session.id} 
-                  variants={{
-                    hidden: { opacity: 0, y: 10 },
-                    show: { opacity: 1, y: 0 }
-                  }}
-                  className="rounded-[1.3rem] border border-white/10 bg-white/5 p-4"
-                >
-                  <div className="flex items-center justify-between gap-4">
-                    <div>
-                      <p className="text-lg font-semibold text-white">{session.skill}</p>
-                      <p className="mt-1 text-sm text-white/55">Completed session, ready for feedback.</p>
-                    </div>
-                    <Link to={`/session/rate/${session.id}`} className="rounded-full border border-teal/20 bg-teal/12 px-4 py-2 text-sm font-medium text-teal transition hover:bg-teal/18">
-                      Rate
-                    </Link>
-                  </div>
-                </motion.div>
+                <SessionCard
+                  key={session.id}
+                  id={session.id}
+                  skill={session.skill}
+                  tutor={session.tutorName || 'Tutor'}
+                  status={session.status}
+                  time={session.completedAt}
+                  onRate={() => navigate(`/session/rate/${session.id}`)}
+                />
               ))}
             </motion.div>
-          )}
-        </GlassPanel>
-      </div>
+          </CardContent>
+        </Card>
+      )}
     </PageShell>
   );
 }

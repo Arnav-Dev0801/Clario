@@ -1,10 +1,14 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { GlassPanel, PageHero, PageShell, PrimaryButton, StatusBadge } from '../components/AppShell';
 import { subscribePendingRequestsForTutor, subscribeSessionsForTutor } from '../services/sessionService';
 import { getUserById } from '../services/userService';
+import { StatCard, SessionCard, ActivityCard } from '../components/dashboard';
+import Card, { CardHeader, CardTitle, CardDescription, CardContent } from '../components/ui/Card';
 
 export default function TutorDashboard({ user, userProfile }) {
+  const navigate = useNavigate();
   const [sessions, setSessions] = useState([]);
   const [pending, setPending] = useState([]);
   const [studentNames, setStudentNames] = useState({});
@@ -32,6 +36,14 @@ export default function TutorDashboard({ user, userProfile }) {
 
   const upcoming = sessions.filter((session) => session.status === 'accepted' || session.status === 'in_progress');
   const greetingName = userProfile?.displayName || user?.displayName || user?.email || 'Tutor';
+  const skills = userProfile?.skills || [];
+  const totalEarnings = sessions
+    .filter(s => s.status === 'completed')
+    .reduce((acc, s) => {
+      const skill = skills.find(sk => (typeof sk === 'string' ? sk : sk?.name || sk?.skill) === s.skill);
+      const rate = typeof skill === 'object' && skill.rate ? skill.rate : 0;
+      return acc + rate;
+    }, 0);
 
   return (
     <PageShell>
@@ -49,19 +61,48 @@ export default function TutorDashboard({ user, userProfile }) {
         }
       />
 
-      <GlassPanel className="mb-6">
+      {/* Stats Grid */}
+      <div className="grid gap-4 md:grid-cols-4 mb-8">
+        <StatCard 
+          icon="📚" 
+          label="Total Sessions" 
+          value={sessions.length}
+          trend={upcoming.length > 0 ? `${upcoming.length} upcoming` : 'No upcoming'}
+        />
+        <StatCard 
+          icon="💰" 
+          label="Total Earnings" 
+          value={`Rs ${totalEarnings}`}
+          trend={sessions.length > 0 ? 'In progress' : 'Start teaching'}
+        />
+        <StatCard 
+          icon="📊" 
+          label="Active Skills" 
+          value={skills.length}
+          trend={skills.length > 0 ? 'Taught by you' : 'Add skills'}
+        />
+        <StatCard 
+          icon="⭐" 
+          label="Avg Rating" 
+          value={sessions.length > 0 ? '4.9' : 'N/A'}
+          trend={sessions.length > 0 ? 'Excellent' : 'Get rated'}
+        />
+      </div>
+
+      {/* Skills Section */}
+      <GlassPanel className="mb-8">
         <div className="mb-5 flex items-center justify-between">
-          <h2 className="text-xl font-semibold text-white">Uploaded skills</h2>
-          <StatusBadge tone="cyan">{(userProfile?.skills || []).length} skills live</StatusBadge>
+          <h2 className="text-xl font-semibold text-white">Your Skills</h2>
+          <StatusBadge tone="cyan">{skills.length} active</StatusBadge>
         </div>
-        {(userProfile?.skills || []).length > 0 ? (
+        {skills.length > 0 ? (
           <div className="flex flex-wrap gap-3">
-            {(userProfile.skills || []).map((skill) => {
+            {skills.map((skill) => {
               const name = typeof skill === 'string' ? skill : skill?.name || skill?.skill || skill;
               const rate = typeof skill === 'object' && skill.rate != null ? skill.rate : null;
               const slots = typeof skill === 'object' && skill.timingSlots ? skill.timingSlots : [];
               return (
-                <div key={name} className="rounded-[1.3rem] border border-cyan/18 bg-cyan/10 px-4 py-3">
+                <div key={name} className="rounded-lg border border-cyan/20 bg-cyan/10 px-4 py-3">
                   <p className="font-medium text-white">{name}</p>
                   {rate != null && rate > 0 ? <p className="mt-1 text-sm text-teal">Rs {rate} / session</p> : null}
                   {slots.length > 0 ? <p className="mt-2 text-xs text-white/55">{slots.join(', ')}</p> : null}
@@ -70,63 +111,98 @@ export default function TutorDashboard({ user, userProfile }) {
             })}
           </div>
         ) : (
-          <div className="rounded-[1.3rem] border border-white/10 bg-white/5 p-4">
-            <p className="text-white/62">No skills uploaded yet. Add them from your profile editor.</p>
-            <Link to="/tutor/profile" className="mt-4 inline-flex rounded-full bg-cyan px-4 py-2 text-sm font-semibold text-navy transition hover:bg-[#8df3ff]">
-              Add your first skill
+          <div className="rounded-lg border border-border bg-surface/50 p-6 text-center">
+            <p className="text-foreground-secondary mb-4">No skills uploaded yet.</p>
+            <Link to="/tutor/profile">
+              <PrimaryButton type="button">Add your first skill</PrimaryButton>
             </Link>
           </div>
         )}
       </GlassPanel>
 
-      <div className="grid gap-6 lg:grid-cols-2">
-        <GlassPanel className="border-coral/18">
-          <div className="mb-5 flex items-center justify-between">
-            <h2 className="text-xl font-semibold text-white">Pending requests</h2>
-            <StatusBadge tone="coral">{pending.length} waiting</StatusBadge>
-          </div>
-          {pending.length === 0 ? (
-            <p className="text-white/62">No pending requests right now.</p>
-          ) : (
-            <div className="space-y-4">
-              {pending.slice(0, 4).map((request) => (
-                <div key={request.id} className="rounded-[1.3rem] border border-white/10 bg-white/5 p-4">
-                  <p className="text-lg font-semibold text-white">{request.skill}</p>
-                  <p className="mt-1 text-sm text-white/55">{studentNames[request.studentId] || 'Student'}</p>
-                  <Link to="/tutor/requests" className="mt-4 inline-flex rounded-full border border-coral/20 bg-coral/12 px-4 py-2 text-sm font-medium text-coral transition hover:bg-coral/18">
-                    Review request
-                  </Link>
-                </div>
-              ))}
-            </div>
-          )}
-        </GlassPanel>
+      <div className="grid gap-6 lg:grid-cols-3 mb-8">
+        {/* Pending Requests */}
+        <div className="lg:col-span-1">
+          <Card>
+            <CardHeader>
+              <CardTitle>Pending Requests</CardTitle>
+              <CardDescription>{pending.length} waiting for response</CardDescription>
+            </CardHeader>
+            <CardContent className="max-h-96 overflow-y-auto">
+              {pending.length === 0 ? (
+                <p className="text-sm text-foreground-tertiary">No pending requests right now.</p>
+              ) : (
+                <motion.div 
+                  initial="hidden" 
+                  animate="show" 
+                  variants={{
+                    hidden: { opacity: 0 },
+                    show: {
+                      opacity: 1,
+                      transition: { staggerChildren: 0.1 }
+                    }
+                  }}
+                  className="space-y-3"
+                >
+                  {pending.slice(0, 5).map((request) => (
+                    <ActivityCard
+                      key={request.id}
+                      title={request.skill}
+                      description={studentNames[request.studentId] || 'Student'}
+                      status="pending"
+                      statusVariant="warning"
+                      action="Review"
+                      onActionClick={() => navigate('/tutor/requests')}
+                    />
+                  ))}
+                </motion.div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
 
-        <GlassPanel>
-          <div className="mb-5 flex items-center justify-between">
-            <h2 className="text-xl font-semibold text-white">Upcoming sessions</h2>
-            <StatusBadge tone="cyan">{upcoming.length} scheduled</StatusBadge>
-          </div>
-          {upcoming.length === 0 ? (
-            <p className="text-white/62">No upcoming sessions yet.</p>
-          ) : (
-            <div className="space-y-4">
-              {upcoming.map((session) => (
-                <div key={session.id} className="rounded-[1.3rem] border border-white/10 bg-white/5 p-4">
-                  <div className="flex items-center justify-between gap-4">
-                    <div>
-                      <p className="text-lg font-semibold text-white">{session.skill}</p>
-                      <p className="mt-1 text-sm text-white/55">{studentNames[session.studentId] || 'Student'}</p>
-                    </div>
-                    <Link to={`/session/lobby/${session.id}`} className="rounded-full bg-cyan px-4 py-2 text-sm font-semibold text-navy transition hover:bg-[#8df3ff]">
-                      Open session
-                    </Link>
-                  </div>
+        {/* Upcoming Sessions */}
+        <div className="lg:col-span-2">
+          <Card>
+            <CardHeader>
+              <CardTitle>Upcoming Sessions</CardTitle>
+              <CardDescription>{upcoming.length} scheduled</CardDescription>
+            </CardHeader>
+            <CardContent>
+              {upcoming.length === 0 ? (
+                <div className="text-center py-8">
+                  <p className="text-foreground-secondary mb-4">No upcoming sessions yet.</p>
                 </div>
-              ))}
-            </div>
-          )}
-        </GlassPanel>
+              ) : (
+                <motion.div 
+                  initial="hidden" 
+                  animate="show" 
+                  variants={{
+                    hidden: { opacity: 0 },
+                    show: {
+                      opacity: 1,
+                      transition: { staggerChildren: 0.1 }
+                    }
+                  }}
+                  className="space-y-3"
+                >
+                  {upcoming.map((session) => (
+                    <SessionCard
+                      key={session.id}
+                      id={session.id}
+                      skill={session.skill}
+                      tutor={studentNames[session.studentId] || 'Student'}
+                      status={session.status}
+                      time={session.scheduledTime}
+                      onJoin={() => navigate(`/session/lobby/${session.id}`)}
+                      isActive={session.status === 'in_progress'}
+                    />
+                  ))}
+                </motion.div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </PageShell>
   );

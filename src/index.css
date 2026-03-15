@@ -5,11 +5,31 @@
 @tailwind utilities;
 
 :root {
+  /* Primary Colors */
   --navy: #0B132B;
+  --indigo: #6366F1;
   --cyan: #00E5FF;
   --teal: #3FE0C5;
+  --green: #22C55E;
   --coral: #FF6B6B;
   --white: #F8F9FA;
+  
+  /* Semantic Colors */
+  --background: #07111f;
+  --background-secondary: #0f1a2e;
+  --background-tertiary: #1a2540;
+  --surface: rgba(255, 255, 255, 0.06);
+  --surface-hover: rgba(255, 255, 255, 0.1);
+  --foreground: #F8F9FA;
+  --foreground-secondary: rgba(248, 249, 250, 0.7);
+  --foreground-tertiary: rgba(248, 249, 250, 0.5);
+  --border: rgba(255, 255, 255, 0.1);
+  
+  /* Status Colors */
+  --error: #EF4444;
+  --success: #22C55E;
+  --warning: #F59E0B;
+  --info: #3B82F6;
 }
 
 * {

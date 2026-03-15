@@ -380,22 +380,130 @@ export default function Landing() {
           </div>
         </section>
 
-        <section className="grid gap-5 md:grid-cols-3">
-          {featureCards.map((card) => (
-            <TiltCard
-              key={card.title}
-              className="group premium-panel rounded-[1.9rem] border border-white/10 bg-white/6 p-6 backdrop-blur-xl transition duration-300 hover:-translate-y-1"
-            >
-              <p className="text-[0.7rem] uppercase tracking-[0.34em] text-cyan/74">{card.eyebrow}</p>
-              <h3 className="mt-4 text-2xl font-semibold leading-tight text-white">{card.title}</h3>
-              <p className="mt-4 text-sm leading-7 text-white/68">{card.body}</p>
-              <div className="mt-6 flex items-center justify-between">
-                <span className="text-sm text-white/42">Hover-reactive panel</span>
-                <span className="feature-dot" />
-              </div>
-            </TiltCard>
-          ))}
+        <section className="mt-20 py-12">
+          <div className="text-center mb-12">
+            <p className="text-sm uppercase tracking-[0.34em] text-cyan/74 mb-4">How it works</p>
+            <h2 className="text-4xl font-bold text-white mb-4">Three reasons to love Clario</h2>
+            <p className="text-white/60 max-w-2xl mx-auto">Experience the perfect blend of discovery, booking, and seamless session management.</p>
+          </div>
+          <div className="grid gap-5 md:grid-cols-3">
+            {featureCards.map((card) => (
+              <TiltCard
+                key={card.title}
+                className="group premium-panel rounded-[1.9rem] border border-white/10 bg-white/6 p-6 backdrop-blur-xl transition duration-300 hover:-translate-y-1"
+              >
+                <p className="text-[0.7rem] uppercase tracking-[0.34em] text-cyan/74">{card.eyebrow}</p>
+                <h3 className="mt-4 text-2xl font-semibold leading-tight text-white">{card.title}</h3>
+                <p className="mt-4 text-sm leading-7 text-white/68">{card.body}</p>
+                <div className="mt-6 flex items-center justify-between">
+                  <span className="text-sm text-white/42">Hover-reactive panel</span>
+                  <span className="feature-dot" />
+                </div>
+              </TiltCard>
+            ))}
+          </div>
         </section>
+
+        {/* Testimonials Section */}
+        <section className="mt-20 py-12">
+          <div className="text-center mb-12">
+            <p className="text-sm uppercase tracking-[0.34em] text-cyan/74 mb-4">Testimonials</p>
+            <h2 className="text-4xl font-bold text-white mb-4">Loved by students and tutors</h2>
+          </div>
+          <div className="grid gap-6 md:grid-cols-3">
+            {[
+              {
+                name: 'Alex Chen',
+                role: 'Computer Science Student',
+                quote: 'Found my React mentor in 5 minutes. The interface is incredibly smooth.',
+              },
+              {
+                name: 'Jamie Torres',
+                role: 'Data Science Tutor',
+                quote: 'Managing sessions and connecting with students has never been easier.',
+              },
+              {
+                name: 'Morgan Blue',
+                role: 'Product Design Student',
+                quote: 'The skill matching is so accurate. Every session has been valuable.',
+              },
+            ].map((testimonial) => (
+              <div
+                key={testimonial.name}
+                className="rounded-[1.6rem] border border-white/10 bg-white/6 p-6 backdrop-blur-xl hover:border-cyan/20 hover:bg-white/8 transition duration-300"
+              >
+                <p className="text-white/80 mb-4 leading-relaxed">"{testimonial.quote}"</p>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo to-cyan flex items-center justify-center">
+                    <span className="text-sm font-bold text-white">{testimonial.name[0]}</span>
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-white">{testimonial.name}</p>
+                    <p className="text-xs text-white/50">{testimonial.role}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="mt-20 py-12">
+          <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-indigo/10 to-cyan/10 p-12 text-center backdrop-blur-xl">
+            <h2 className="text-4xl font-bold text-white mb-4">Ready to transform your learning?</h2>
+            <p className="text-white/70 max-w-2xl mx-auto mb-8 text-lg">Join thousands of students and tutors already using Clario to learn and teach smarter.</p>
+            <div className="flex flex-col gap-4 sm:flex-row items-center justify-center">
+              <MagneticButton to="/register">Get started free</MagneticButton>
+              <MagneticButton to="/login" variant="secondary">Sign in</MagneticButton>
+            </div>
+          </div>
+        </section>
+
+        {/* Footer */}
+        <footer className="mt-20 py-12 border-t border-white/10">
+          <div className="grid gap-8 md:grid-cols-4 mb-8">
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-cyan/20 text-sm font-bold text-cyan">
+                  C
+                </div>
+                <p className="text-sm font-semibold text-white">Clario</p>
+              </div>
+              <p className="text-xs text-white/50">Peer-to-peer campus learning platform.</p>
+            </div>
+
+            <div>
+              <p className="text-sm font-semibold text-white mb-3">Product</p>
+              <ul className="space-y-2 text-xs text-white/50 hover:text-white/70">
+                <li><a href="#" className="transition hover:text-white">Features</a></li>
+                <li><a href="#" className="transition hover:text-white">Pricing</a></li>
+                <li><a href="#" className="transition hover:text-white">Security</a></li>
+              </ul>
+            </div>
+
+            <div>
+              <p className="text-sm font-semibold text-white mb-3">Company</p>
+              <ul className="space-y-2 text-xs text-white/50">
+                <li><a href="#" className="transition hover:text-white">About</a></li>
+                <li><a href="#" className="transition hover:text-white">Blog</a></li>
+                <li><a href="#" className="transition hover:text-white">Careers</a></li>
+              </ul>
+            </div>
+
+            <div>
+              <p className="text-sm font-semibold text-white mb-3">Legal</p>
+              <ul className="space-y-2 text-xs text-white/50">
+                <li><a href="#" className="transition hover:text-white">Privacy</a></li>
+                <li><a href="#" className="transition hover:text-white">Terms</a></li>
+                <li><a href="#" className="transition hover:text-white">Contact</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="border-t border-white/10 pt-8 text-center text-xs text-white/40">
+            <p>© 2024 Clario. All rights reserved. Designed with ✨ for modern learners.</p>
+          </div>
+        </footer>
       </div>
     </div>
   );
