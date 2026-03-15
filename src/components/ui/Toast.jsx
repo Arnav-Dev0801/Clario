@@ -10,11 +10,11 @@ const Toast = forwardRef(({
   ...props
 }, ref) => {
   const variants = {
-    default: 'bg-surface border-border text-foreground',
-    success: 'bg-green/10 border-green/30 text-green',
-    error: 'bg-error/10 border-error/30 text-error',
-    warning: 'bg-warning/10 border-warning/30 text-warning',
-    info: 'bg-info/10 border-info/30 text-info',
+    default: 'bg-white border-border text-foreground shadow-lg',
+    success: 'bg-green-50 border-green/30 text-success shadow-lg',
+    error: 'bg-red-50 border-error/30 text-error shadow-lg',
+    warning: 'bg-orange-50 border-warning/30 text-warning shadow-lg',
+    info: 'bg-blue-50 border-info/30 text-info shadow-lg',
   };
 
   return (
@@ -28,7 +28,6 @@ const Toast = forwardRef(({
         fixed bottom-4 right-4 z-50
         px-4 py-3 rounded-lg border
         flex items-center gap-3
-        backdrop-blur-sm
         ${variants[variant]}
         ${className}
       `}

@@ -18,7 +18,7 @@ export default function ControlsBar({
       initial={{ y: 100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       exit={{ y: 100, opacity: 0 }}
-      className="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-background via-background/95 to-background/0 border-t border-border backdrop-blur-lg"
+      className="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-white via-white/98 to-white/0 border-t border-border shadow-lg"
     >
       <div className="max-w-4xl mx-auto px-4 py-6 flex items-center justify-center gap-3 flex-wrap">
         {/* Microphone Control */}
@@ -28,8 +28,8 @@ export default function ControlsBar({
           onClick={onToggleMute}
           className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ${
             isMuted
-              ? 'bg-error/20 text-error hover:bg-error/30'
-              : 'bg-foreground/10 text-foreground hover:bg-foreground/20'
+              ? 'bg-red-100 text-error hover:bg-red-200'
+              : 'bg-background-secondary text-foreground hover:bg-background-tertiary'
           }`}
         >
           <span className="text-lg">{isMuted ? '🔇' : '🎤'}</span>

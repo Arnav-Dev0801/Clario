@@ -26,8 +26,8 @@ export default function SessionCard({
       animate={{ opacity: 1, y: 0 }}
       className={`p-4 rounded-lg border transition-all ${
         isActive 
-          ? 'border-indigo bg-indigo/10' 
-          : 'border-border bg-surface/50 hover:bg-surface'
+          ? 'border-purple bg-purple/5 shadow-md' 
+          : 'border-border bg-background-secondary hover:bg-background-tertiary'
       }`}
     >
       <div className="flex items-start justify-between gap-4 mb-3">

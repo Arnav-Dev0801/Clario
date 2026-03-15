@@ -71,7 +71,7 @@ export default function ChatWindow({
           initial="hidden"
           animate="visible"
           exit="exit"
-          className="fixed bottom-20 right-6 p-3 rounded-full bg-indigo hover:bg-indigo/90 text-white shadow-lg flex items-center justify-center w-14 h-14 z-40"
+          className="fixed bottom-20 right-6 p-3 rounded-full bg-purple hover:bg-purple-dark text-white shadow-lg flex items-center justify-center w-14 h-14 z-40"
           onClick={onClose}
         >
           <span className="text-xl">💬</span>
@@ -83,10 +83,10 @@ export default function ChatWindow({
           initial="hidden"
           animate="visible"
           exit="exit"
-          className="fixed bottom-24 right-6 w-96 max-w-[calc(100vw-32px)] rounded-lg border border-border bg-background-secondary/60 backdrop-blur-xl shadow-xl overflow-hidden z-40 flex flex-col max-h-[600px]"
+          className="fixed bottom-24 right-6 w-96 max-w-[calc(100vw-32px)] rounded-lg border border-border bg-white shadow-xl overflow-hidden z-40 flex flex-col max-h-[600px]"
         >
           {/* Header */}
-          <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-background-secondary/80 shrink-0">
+          <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-white shrink-0">
             <div>
               <h3 className="font-semibold text-foreground text-sm">{participantName}</h3>
               <p className="text-xs text-foreground-tertiary">Session chat</p>

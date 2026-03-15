@@ -5,8 +5,8 @@ const Card = forwardRef(({ children, className = '', hover = false, ...props }, 
     <div
       ref={ref}
       className={`
-        rounded-xl border border-border bg-surface backdrop-blur-sm
-        ${hover ? 'hover:bg-surface-hover transition-colors duration-200' : ''}
+        rounded-lg border border-border bg-white shadow-sm
+        ${hover ? 'hover:shadow-md hover:border-purple/20 transition-all duration-200' : ''}
         ${className}
       `}
       {...props}

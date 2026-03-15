@@ -20,7 +20,7 @@ const Avatar = forwardRef(({
       ref={ref}
       className={`
         flex items-center justify-center
-        rounded-full bg-indigo/20 text-indigo
+        rounded-full bg-purple/10 text-purple
         font-semibold overflow-hidden
         ${sizes[size]}
         ${className}

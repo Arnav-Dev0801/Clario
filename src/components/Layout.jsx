@@ -18,7 +18,7 @@ export default function Layout({ user, userProfile }) {
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* Background gradient */}
-      <div className="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,_rgba(99,102,241,0.08),_transparent_22%),radial-gradient(circle_at_top_right,_rgba(0,229,255,0.1),_transparent_28%),linear-gradient(180deg,_#07111f,_#040a13)]" />
+      <div className="fixed inset-0 -z-10 bg-gradient-to-br from-background via-background-secondary to-background-tertiary" />
       
       {/* Sidebar */}
       <Sidebar 

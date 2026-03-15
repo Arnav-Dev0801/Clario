@@ -29,12 +29,12 @@ export default function Sidebar({ user, userProfile, open = true, onOpenChange }
         animate={{ x: 0 }}
         exit={{ x: -320 }}
         transition={{ duration: 0.3, ease: 'easeInOut' }}
-        className="fixed inset-y-0 left-0 z-30 flex w-64 flex-col border-r border-border bg-background-secondary/40 backdrop-blur-lg md:translate-x-0"
+        className="fixed inset-y-0 left-0 z-30 flex w-64 flex-col border-r border-border bg-white shadow-sm md:translate-x-0"
         style={{ transform: !open ? 'translateX(-100%)' : 'translateX(0)' }}
       >
         {/* Brand Header */}
         <div className="flex h-20 items-center gap-3 px-6 pb-2 pt-6 border-b border-border">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-indigo to-cyan text-lg font-bold text-white">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-purple to-purple-light text-lg font-bold text-white">
             C
           </div>
           <div className="flex-1">
@@ -78,8 +78,8 @@ export default function Sidebar({ user, userProfile, open = true, onOpenChange }
                   whileTap={{ scale: 0.98 }}
                   className={`flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-all duration-200 ${
                     isActive
-                      ? 'bg-indigo/20 text-indigo border-l-2 border-indigo pl-3'
-                      : 'text-foreground-secondary hover:text-foreground hover:bg-white/5'
+                      ? 'bg-purple/10 text-purple border-l-2 border-purple pl-3'
+                      : 'text-foreground-secondary hover:text-foreground hover:bg-background-secondary'
                   }`}
                 >
                   <span className="text-base">{item.icon}</span>
@@ -99,7 +99,7 @@ export default function Sidebar({ user, userProfile, open = true, onOpenChange }
       {/* Mobile hamburger button */}
       <button
         onClick={() => onOpenChange?.(!open)}
-        className="md:hidden fixed top-4 left-4 z-40 p-2 rounded-lg bg-surface hover:bg-surface-hover border border-border transition-colors"
+        className="md:hidden fixed top-4 left-4 z-40 p-2 rounded-lg bg-white hover:bg-background-secondary border border-border shadow-sm transition-colors"
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />

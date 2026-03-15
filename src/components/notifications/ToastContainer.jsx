@@ -31,8 +31,8 @@ export function useToast() {
 }
 
 const toastVariants = {
-  default: 'bg-surface border-border text-foreground',
-  success: 'bg-green/10 border-green/30 text-green',
+  default: 'bg-white border-border text-foreground shadow-lg',
+  success: 'bg-green-50 border-green/30 text-success shadow-lg',
   error: 'bg-error/10 border-error/30 text-error',
   warning: 'bg-warning/10 border-warning/30 text-warning',
   info: 'bg-info/10 border-info/30 text-info',

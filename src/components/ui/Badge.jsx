@@ -8,11 +8,11 @@ const Badge = forwardRef(({
   ...props
 }, ref) => {
   const variants = {
-    default: 'bg-indigo/20 text-indigo border border-indigo/30',
-    secondary: 'bg-cyan/20 text-cyan border border-cyan/30',
-    success: 'bg-green/20 text-green border border-green/30',
-    error: 'bg-error/20 text-error border border-error/30',
-    warning: 'bg-warning/20 text-warning border border-warning/30',
+    default: 'bg-purple/10 text-purple border border-purple/20',
+    secondary: 'bg-blue-100 text-blue-700 border border-blue-200',
+    success: 'bg-green-100 text-success border border-green/20',
+    error: 'bg-red-100 text-error border border-error/20',
+    warning: 'bg-orange-100 text-warning border border-warning/20',
     outline: 'border border-border text-foreground-secondary',
   };
 

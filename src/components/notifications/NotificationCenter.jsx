@@ -28,10 +28,10 @@ export default function NotificationCenter({
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
-          className="absolute right-0 mt-2 w-96 max-w-[calc(100vw-24px)] bg-surface border border-border rounded-xl shadow-xl overflow-hidden z-50"
+          className="absolute right-0 mt-2 w-96 max-w-[calc(100vw-24px)] bg-white border border-border rounded-xl shadow-xl overflow-hidden z-50"
         >
           {/* Header */}
-          <div className="px-4 py-3 border-b border-border bg-surface flex items-center justify-between">
+          <div className="px-4 py-3 border-b border-border bg-background-secondary flex items-center justify-between">
             <div>
               <h3 className="font-semibold text-foreground text-sm">Notifications</h3>
               {unreadCount > 0 && (

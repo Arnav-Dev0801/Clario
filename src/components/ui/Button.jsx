@@ -10,11 +10,11 @@ const Button = forwardRef(({
   ...props
 }, ref) => {
   const variants = {
-    primary: 'bg-indigo hover:bg-indigo/90 text-white',
-    secondary: 'bg-surface hover:bg-surface-hover text-foreground border border-border',
+    primary: 'bg-purple hover:bg-purple-dark text-white shadow-sm hover:shadow-md',
+    secondary: 'bg-background-secondary hover:bg-background-tertiary text-foreground border border-border',
     danger: 'bg-error hover:bg-error/90 text-white',
-    success: 'bg-green hover:bg-green/90 text-white',
-    ghost: 'text-foreground-secondary hover:text-foreground hover:bg-white/5',
+    success: 'bg-success hover:bg-success/90 text-white',
+    ghost: 'text-foreground-secondary hover:text-foreground hover:bg-background-secondary',
   };
 
   const sizes = {

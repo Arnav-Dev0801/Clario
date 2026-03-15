@@ -8,29 +8,33 @@ export default {
     extend: {
       colors: {
         // Primary brand colors
+        purple: '#5B21B6',
+        'purple-light': '#7C3AED',
+        'purple-dark': '#3E1E5F',
+        
+        // Legacy colors (for gradual migration)
         navy: '#0B132B',
-        indigo: '#6366F1',
         cyan: '#00E5FF',
         teal: '#3FE0C5',
-        green: '#22C55E',
         coral: '#FF6B6B',
         
-        // Semantic colors
-        background: '#07111f',
-        'background-secondary': '#0f1a2e',
-        'background-tertiary': '#1a2540',
-        surface: 'rgba(255, 255, 255, 0.06)',
-        'surface-hover': 'rgba(255, 255, 255, 0.1)',
-        foreground: '#F8F9FA',
-        'foreground-secondary': 'rgba(248, 249, 250, 0.7)',
-        'foreground-tertiary': 'rgba(248, 249, 250, 0.5)',
-        border: 'rgba(255, 255, 255, 0.1)',
+        // Semantic colors - Light Theme
+        background: '#FFFFFF',
+        'background-secondary': '#F5F7FA',
+        'background-tertiary': '#EEF2F7',
+        surface: '#FFFFFF',
+        'surface-hover': '#F9FAFB',
+        foreground: '#1F2937',
+        'foreground-secondary': '#4B5563',
+        'foreground-tertiary': '#6B7280',
+        border: '#E5E7EB',
+        'border-light': '#F3F4F6',
         
         // Status colors
-        error: '#EF4444',
-        success: '#22C55E',
-        warning: '#F59E0B',
-        info: '#3B82F6',
+        error: '#DC2626',
+        success: '#059669',
+        warning: '#D97706',
+        info: '#2563EB',
       },
       fontFamily: {
         sans: ['DM Sans', 'system-ui', 'sans-serif'],

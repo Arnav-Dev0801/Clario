@@ -16,12 +16,12 @@ const Input = forwardRef(({
       disabled={disabled}
       className={`
         w-full px-4 py-2 text-base
-        bg-surface border border-border
+        bg-white border border-border
         text-foreground placeholder-foreground-tertiary
         rounded-lg transition-all duration-200
-        focus:outline-none focus:ring-2 focus:ring-indigo/50 focus:border-indigo
+        focus:outline-none focus:ring-2 focus:ring-purple/30 focus:border-purple
         disabled:opacity-50 disabled:cursor-not-allowed
-        ${error ? 'border-error focus:ring-error/50 focus:border-error' : ''}
+        ${error ? 'border-error focus:ring-error/30 focus:border-error' : ''}
         ${className}
       `}
       {...props}

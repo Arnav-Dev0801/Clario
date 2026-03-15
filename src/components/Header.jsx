@@ -24,12 +24,12 @@ export default function Header({ user, userProfile, onLogout }) {
   const userInitials = userProfile?.displayName?.split(' ').map(n => n[0]).join('') || 'U';
 
   return (
-    <header className="sticky top-0 z-20 border-b border-border bg-background-secondary/40 backdrop-blur-xl">
+    <header className="sticky top-0 z-20 border-b border-border bg-white shadow-sm">
       <div className="flex items-center justify-between px-6 py-4 gap-4">
         {/* Search Bar */}
         <div className="flex-1 max-w-md relative">
           <div className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-all duration-200 ${
-            searchOpen ? 'bg-surface border-indigo' : 'bg-surface/50 border-border hover:bg-surface'
+            searchOpen ? 'bg-background-secondary border-purple' : 'bg-background-secondary border-border hover:bg-background-tertiary'
           }`}>
             <span className="text-foreground-tertiary">🔍</span>
             <Input

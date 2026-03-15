@@ -72,31 +72,31 @@ function OrbitalRing({ radius, color, speed, offset, opacity = 0.7 }) {
 function HeroScene() {
   return (
     <Canvas camera={{ position: [0, 0, 7], fov: 48 }} dpr={[1, 1.5]}>
-      <color attach="background" args={['#07111f']} />
-      <fog attach="fog" args={['#07111f', 6, 14]} />
-      <ambientLight intensity={0.95} />
-      <directionalLight position={[3, 4, 5]} intensity={2.1} color="#8eeeff" />
-      <pointLight position={[-4, -2, 3]} intensity={1.8} color="#6f7cff" />
-      <pointLight position={[4, 1, 2]} intensity={1.4} color="#3fe0c5" />
+      <color attach="background" args={['#FFFFFF']} />
+      <fog attach="fog" args={['#FFFFFF', 6, 14]} />
+      <ambientLight intensity={1.2} />
+      <directionalLight position={[3, 4, 5]} intensity={2.1} color="#7C3AED" />
+      <pointLight position={[-4, -2, 3]} intensity={1.6} color="#5B21B6" />
+      <pointLight position={[4, 1, 2]} intensity={1.2} color="#A78BFA" />
 
       <group position={[1.25, -0.15, -1.2]}>
-        <OrbitalRing radius={1.45} color="#00e5ff" speed={0.25} offset={0.3} opacity={0.5} />
-        <OrbitalRing radius={2.1} color="#7a7cff" speed={-0.17} offset={1.6} opacity={0.4} />
-        <OrbitalRing radius={2.75} color="#8df1ff" speed={0.11} offset={2.3} opacity={0.2} />
+        <OrbitalRing radius={1.45} color="#7C3AED" speed={0.25} offset={0.3} opacity={0.4} />
+        <OrbitalRing radius={2.1} color="#A78BFA" speed={-0.17} offset={1.6} opacity={0.3} />
+        <OrbitalRing radius={2.75} color="#DDD6FE" speed={0.11} offset={2.3} opacity={0.15} />
       </group>
 
-      <FloatingShape position={[-2.4, 1.4, -1]} rotation={[0.8, 0.5, 0.2]} color="#9ff7ff" scale={0.72} speed={0.8} />
-      <FloatingShape position={[2.55, -1.25, -0.35]} rotation={[0.35, 0.7, -0.4]} color="#5f67ff" scale={0.95} speed={1.05} />
-      <FloatingShape position={[0.85, 2.05, -2.15]} rotation={[1.1, 0.1, 0.5]} color="#3fe0c5" scale={0.55} speed={0.65} />
+      <FloatingShape position={[-2.4, 1.4, -1]} rotation={[0.8, 0.5, 0.2]} color="#C4B5FD" scale={0.72} speed={0.8} />
+      <FloatingShape position={[2.55, -1.25, -0.35]} rotation={[0.35, 0.7, -0.4]} color="#7C3AED" scale={0.95} speed={1.05} />
+      <FloatingShape position={[0.85, 2.05, -2.15]} rotation={[1.1, 0.1, 0.5]} color="#E9D5FF" scale={0.55} speed={0.65} />
 
       <mesh position={[-1.8, -2.05, -3]} rotation={[-0.5, 0.8, 0.2]}>
         <octahedronGeometry args={[0.72, 0]} />
-        <meshStandardMaterial color="#ff7e6b" emissive="#ff7e6b" emissiveIntensity={0.18} metalness={0.22} roughness={0.24} />
+        <meshStandardMaterial color="#A78BFA" emissive="#A78BFA" emissiveIntensity={0.15} metalness={0.22} roughness={0.24} />
       </mesh>
 
       <mesh position={[0, -2.6, -3.1]} rotation={[-Math.PI / 2, 0, 0]}>
         <circleGeometry args={[6, 48]} />
-        <meshBasicMaterial color="#10253e" transparent opacity={0.6} />
+        <meshBasicMaterial color="#F3F4F6" transparent opacity={0.4} />
       </mesh>
     </Canvas>
   );
@@ -131,8 +131,8 @@ function MagneticButton({ to, children, variant = 'primary' }) {
 
   const className =
     variant === 'primary'
-      ? 'bg-cyan text-navy shadow-[0_18px_60px_rgba(0,229,255,0.28)] hover:bg-[#94f5ff]'
-      : 'border border-white/15 bg-white/6 text-white/90 hover:border-cyan/35 hover:bg-white/10';
+      ? 'bg-purple text-white shadow-[0_18px_60px_rgba(91,33,182,0.2)] hover:bg-purple-dark'
+      : 'border border-border bg-background-secondary text-foreground hover:border-purple/40 hover:bg-background-tertiary';
 
   return (
     <Link
